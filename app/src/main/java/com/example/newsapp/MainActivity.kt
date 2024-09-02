@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var newsAdapter: NewsAdapter
 
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://news.google.com/")
+        .baseUrl("https://www.yna.co.kr/")
         .addConverterFactory(
             TikXmlConverterFactory.create(
                 TikXml.Builder()
