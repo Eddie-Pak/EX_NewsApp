@@ -35,15 +35,61 @@ class MainActivity : AppCompatActivity() {
 
         newsAdapter = NewsAdapter()
 
+        val newsService = retrofit.create(NewsService::class.java)
+
         binding.newsRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = newsAdapter
         }
 
-        val newsService = retrofit.create(NewsService::class.java)
-        newsService.mainFeed().enqueue(object: Callback<NewsRss> {
+        binding.feedChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.feedChip.isChecked = true
+
+            newsService.mainFeed().submitList()
+        }
+
+        binding.politicsChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.politicsChip.isChecked = true
+
+            newsService.politicsNews().submitList()
+        }
+
+        binding.industryChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.industryChip.isChecked = true
+
+            newsService.industryNews().submitList()
+        }
+
+        binding.worldChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.worldChip.isChecked = true
+
+            newsService.worldNews().submitList()
+        }
+
+        binding.cultureChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.cultureChip.isChecked = true
+
+            newsService.cultureNews().submitList()
+        }
+
+        binding.sportChip.setOnClickListener {
+            binding.chipGroup.clearCheck()
+            binding.sportChip.isChecked = true
+
+            newsService.sportsNews().submitList()
+        }
+
+        newsService.mainFeed().submitList()
+    }
+
+    private fun Call<NewsRss>.submitList() {
+        enqueue(object: Callback<NewsRss> {
             override fun onResponse(call: Call<NewsRss>, response: Response<NewsRss>) {
-                Log.e("MainActivity", "${response.body()?.channel?.items}")
 
                 val list = response.body()?.channel?.items.orEmpty().transform()
                 newsAdapter.submitList(list)
@@ -57,7 +103,6 @@ class MainActivity : AppCompatActivity() {
                                 node.attr("property") == "og:image"
                             }
                             news.imageUrl = ogImageNode?.attr("content")
-                            Log.e("MainActivity", "imageUrl: ${news.imageUrl}")
                         } catch (e: Exception) {
                             e.printStackTrace()
                         }
@@ -72,7 +117,6 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(call: Call<NewsRss>, t: Throwable) {
                 t.printStackTrace()
             }
-
         })
     }
 }
