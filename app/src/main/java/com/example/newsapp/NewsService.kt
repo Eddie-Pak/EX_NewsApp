@@ -2,6 +2,7 @@ package com.example.newsapp
 
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface NewsService {
     @GET("rss/news.xml")
@@ -21,4 +22,7 @@ interface NewsService {
 
     @GET("rss/sports.xml")
     fun sportsNews(): Call<NewsRss>
+
+    @GET("rss/search?&hl=ko&gl=KR&ceid=KR%3Ako")
+    fun search(@Query("q") query: String): Call <NewsRss>
 }
