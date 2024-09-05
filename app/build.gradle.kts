@@ -55,6 +55,8 @@ dependencies {
     implementation ("org.jsoup:jsoup:1.18.1")
     implementation ("com.github.bumptech.glide:glide:4.14.2")
 
+    implementation ("com.airbnb.android:lottie:6.5.2")
+
     kapt ("com.tickaroo.tikxml:processor:0.8.13")
 
     testImplementation("junit:junit:4.13.2")
